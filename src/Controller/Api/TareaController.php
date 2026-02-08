@@ -16,15 +16,16 @@ final class TareaController extends AbstractController
      * @param int $id El identificador del usuario
      * @param TareaRepository $tareaRepository Repositorio de tareas
      * @return JsonResponse Respuesta JSON con las tareas del usuario
-     * 
-     * @throws \Exception Si el usuario no existe o hay error en la base de datos
      */
     #[Route('/api/usuarios/{id}/tareas', methods: ['GET'])]
     public function tareasUsuario(int $id, Request $request, TareaRepository $tareaRepository): JsonResponse 
     {
-        $page = $request->query->get('page', 1);
-        $tareas = $tareaRepository->getTareasByUsuario($id, $page);
+        $draw = $request->query->get('draw', 1);
+        $start = $request->query->get('start', 0);
+        $limit = $request->query->get('length', 10);
+        $search = $request->query->get('search');
 
-        return $this->json(['page' => $page, 'data' => $tareas]);
+        $tareas = $tareaRepository->getTareasByUsuario($id, ['search' => $search], $start, $limit);
+        return $this->json(['draw' => $draw, ...$tareas]);
     }
 }
