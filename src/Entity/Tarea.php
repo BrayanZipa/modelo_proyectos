@@ -24,7 +24,7 @@ class Tarea
     private ?Proyecto $proyecto = null;
 
     #[ORM\ManyToOne]
-    private ?estado $estado = null;
+    private ?Estado $estado = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -33,7 +33,6 @@ class Tarea
     {
         $this->createdAt = new \DateTimeImmutable();
     }
-
 
     public function getId(): ?int
     {
@@ -76,12 +75,12 @@ class Tarea
         return $this;
     }
 
-    public function getEstado(): ?estado
+    public function getEstado(): ?Estado
     {
         return $this->estado;
     }
 
-    public function setEstado(?estado $estado): static
+    public function setEstado(?Estado $estado): static
     {
         $this->estado = $estado;
 
